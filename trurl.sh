@@ -114,11 +114,9 @@ _VER="$1"
   fi
   # On macOS this picks up a system libcurl by default. Ours is picked up
   # when running it from the unpacked release tarball.
-  LD_LIBRARY_PATH="$(pwd)/../curl/${_PP}/lib"; export LD_LIBRARY_PATH
-  export DYLD_LIBRARY_PATH="${LD_LIBRARY_PATH}"
-  ${_RUN_BIN} "${bin}" --version | tee "trurl-${_CPU}.txt" || true
-  unset DYLD_LIBRARY_PATH
-  unset LD_LIBRARY_PATH
+  LD_LIBRARY_PATH="$(pwd)/../curl/${_PP}/lib" \
+  DYLD_LIBRARY_PATH="$(pwd)/../curl/${_PP}/lib" \
+    ${_RUN_BIN} "${bin}" --version | tee "trurl-${_CPU}.txt" || true
   unset LD_DEBUG
 
   if [ "${CW_TURL_TEST:-}" = '1' ] && \
